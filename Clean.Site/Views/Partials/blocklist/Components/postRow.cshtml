@@ -1,0 +1,42 @@
+@inherits UmbracoViewPage<BlockListItem>
+
+@{
+    var row = (PostRow)Model.Content;
+    
+    var settings = (PostRowSettings)Model.Settings;
+    if(settings?.Hide ?? false) { return; }
+    if(row.PostItems == null || !row.PostItems.Any()) return;
+}
+
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+
+    @foreach (var item in row.PostItems)
+    {
+        var rowItem = (PostItem)item.Content;
+        var rowSettings = (PostItemSettings)item.Settings;
+        if(rowSettings.Hide) continue;
+
+        <div class="post-preview">
+        <a href="">
+             <h2 class="post-title">@rowItem.Title</h2>
+         </a>
+            <h4 class="post-subtitle">@rowItem.Snippet</h4>
+            
+            <p class="post-meta">
+                Posted by
+                <a href="#!">Admin</a>
+                on September 24, 2022
+            </p>
+        </div>
+            <!-- Divider-->
+            <hr class="my-4" />
+
+    }
+            <!-- Pager-->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+        </div>
+    </div>
+</div>
